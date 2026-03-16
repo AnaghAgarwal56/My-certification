@@ -1,0 +1,118 @@
+|| commands related to bash scripting  ||
+echo "hello world"     |-->  print hello world.
+
+chmod +x script.sh---  |--> gives the permission to the file named bash.sh
+./script.sh----------  |--> runs the file named bash.sh
+
+greeting="hello"       |--> variable is created of name greeting. note* there should be no space between greeting,=and"".
+
+echo $greeting         |--> it prints the variable.
+_____________________________________________________________________________________________________________________
+
+Equal: -eq
+Not equal: -ne
+Less than or equal: -le
+Less than: -lt
+Greater than or equal: -ge
+Greater than: -gt
+Is null: -z
+_____________________________________________________________________________________________________________________
+
+if [ $index -lt 5 ]
+then
+  echo $index
+else
+  echo 5
+fi                    |--> fi closes the condition.
+_____________________________________________________________________________________________________________________
+
+When comparing strings, it is best practice to put the variable into quotes (").
+This prevents errors if the variable is null or contains spaces. The common operators for comparing strings are:
+
+Equal: ==
+Not equal: !=
+For example, to compare if the variables foo and bar contain the same string:
+
+if [ "$foo" == "$bar" ]
+
+--------------------
+for word in $paragraph
+do
+  echo $word
+done
+-------------------
+while [ $index -lt 5 ]
+do
+  echo $index
+  index=$((index + 1))
+done
+-------------------
+until [ $index -eq 5 ]
+do
+  echo $index
+  index=$((index + 1))
+done
+--------------------
+_____________________________________________________________________________________________________________________
+
+Inputs
+To make bash scripts more useful, we need to be able to access data external to the bash script file itself. 
+The first way to do this is by prompting the user for input. For this, we use the read syntax.
+To ask the user for input and save it to the number variable, we would use the following code:
+
+echo "Guess a number"
+read number
+echo "You guessed $number"
+
+Another way to access external data is to have the user add input arguments when they run your script. 
+These arguments are entered after the script name and are separated by spaces. For example:
+
+saycolors red green blue
+
+
+Within the script, these are accessed using $1, $2, etc, where $1 is the first argument (here, “red”) and so on. Note that these are 1 indexed.
+
+If your script needs to accept an indefinite number of input arguments, you can iterate over them using the "$@" syntax. 
+For our saycolors example, we could print each color using:
+
+for color in "$@"
+do
+  echo $color
+done
+
+
+Lastly, we can access external files to our script. You can assign a set of files to a variable name 
+using standard bash pattern matching using regular expressions. For example, to get all files in a directory, you can use the * character:
+
+files=/some/directory/*
+
+You can then iterate through each file and do something. Here, lets just print the full path and filename:
+
+for file in $files
+do
+  echo $file
+done
+_____________________________________________________________________________________________________________________
+
+Akiases
+aliases greet3="./script.sh 3"  |--> aliases is created of name greet3 which calls ./script.sh 3 without taking its complete name 
+
+||||||||||--------->>>>REVIEW<<<<--------------------|||||||||||||
+Take a minute to review what you’ve learned about bash scripting.
+
+Any command that can be run in the terminal can be run in a bash script.
+Variables are assigned using an equals sign with no space (greeting="hello").
+Variables are accessed using a dollar sign (echo $greeting).
+Conditionals use if, then, else, fi syntax.
+Three types of loops can be used: for, while, and until.
+Bash scripts use a unique set of comparison operators:
+Equal: -eq
+Not equal: -ne
+Less than or equal: -le
+Less than: -lt
+Greater than or equal: -ge
+Greater than: -gt
+Is null: -z
+Input arguments can be passed to a bash script after the script name, separated by spaces (myScript.sh “hello” “how are you”).
+Input can be requested from the script user with the read keyword.
+Aliases can be created in the .bashrc or .bash_profile using the alias keyword.
